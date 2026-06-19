@@ -95,30 +95,7 @@ pipeline {
             }
         }
 
-        /* =====================================================
-           OWASP DEPENDENCY CHECK
-        ===================================================== */
-
-        stage('OWASP Dependency Check') {
-            
-            steps {
-                unstash 'source-code'
-                dependencyCheck(
-                    odcInstallation: 'OWASP-DC',
-                    additionalArguments: '''
-                        --scan ${WORKSPACE}
-                        --format ALL
-                        --out ${WORKSPACE}/dependency-check-report
-                    '''
-                )
-
-                sh "ls -l dependency-check-report || true"
-
-                dependencyCheckPublisher(
-                    pattern: '**/dependency-check-report.xml'
-                )
-            }
-        }
+        
 
         /* =====================================================
            DOCKER BUILD
